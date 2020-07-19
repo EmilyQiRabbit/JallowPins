@@ -32,6 +32,11 @@
         margin-bottom: 15px;
         border-radius: 150px;
       }
+      .download-btn {
+        visibility: hidden;
+        border: 0;
+        background: none;
+      }
       .divider {
         white-space: nowrap;
         visibility: hidden;
@@ -44,6 +49,8 @@
       .icon-banners {
         display: flex;
         visibility: hidden;
+        height: 0;
+        overflow: hidden;
         flex-direction: column;
         margin-top: 24px;
       }
@@ -72,8 +79,11 @@
         style="width: 300px; height: 300px;"
       ></canvas>
       <div class="form-item">
-        <label for="avatar">💛 请选择头像图片:</label>
+        <label for="avatar">🙌 请选择头像图片:</label>
         <input type="file" id="avatar" name="avatar" accept="image/*" />
+      </div>
+      <div>
+        <button class='download-btn'>💛 下载 Jallow Pins 头像 💛</button>
       </div>
       <div class="divider">----------------------------</div>
       <div class="icon-banners">
@@ -149,6 +159,7 @@
           );
           changeCanvasVisible(true);
           changeIconBannerVisible(true);
+          changeDownloadBtnVisible(true);
         };
       }
       function drawIconBorder() {
@@ -188,6 +199,10 @@
       function changeIconBannerVisible(visible) {
         $('.divider').css('visibility', visible ? 'visible' : 'hidden');
         $('.icon-banners').css('visibility', visible ? 'visible' : 'hidden');
+        $('.icon-banners').css('height', visible ? 'auto' : '0');
+      }
+      function changeDownloadBtnVisible(visible) {
+        $('.download-btn').css('visibility', visible ? 'visible' : 'hidden');
       }
       function inputChangeListener() {
         $("#avatar").change(function (e) {
@@ -217,11 +232,27 @@
           1;
         return (window.devicePixelRatio || 1) / backingStore;
       }
+      function downloadCanvasImg() {
+        var MIME_TYPE = "image/png";
+        var imgURL = canvas.toDataURL(MIME_TYPE);
+        var dlLink = document.createElement('a');
+        dlLink.download = 'JallowPinsAvatar';
+        dlLink.href = imgURL;
+        dlLink.dataset.downloadurl = [MIME_TYPE, dlLink.download, dlLink.href].join(':');
+
+        document.body.appendChild(dlLink);
+        dlLink.click();
+        document.body.removeChild(dlLink);
+      }
+      function downloadBtnListener() {
+        $('.download-btn').click(downloadCanvasImg)
+      }
       /* ～～～～～ main ～～～～～ */
       $(document).ready(function () {
         console.log("(｡･ω･｡)ﾉ💛～ document ready");
         inputChangeListener();
         imgClickListener();
+        downloadBtnListener();
       });
     </script>
   </body>
