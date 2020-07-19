@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Jallow Pins</title>
+    <meta
+      name="viewport"
+      content="width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"
+    />
+    <style type="text/css">
+      * {
+        margin: 0;
+      }
+      #main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 24px;
+      }
+      .form-item {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        font-size: 14px;
+        margin-bottom: 24px;
+      }
+      .form-item label {
+        margin-bottom: 8px;
+      }
+      canvas {
+        display: none;
+        margin-bottom: 15px;
+        border-radius: 150px;
+      }
+      .divider {
+        white-space: nowrap;
+        visibility: hidden;
+      }
+      h3,
+      h4 {
+        font-weight: normal;
+        margin-bottom: 16px;
+      }
+      .icon-banners {
+        display: flex;
+        visibility: hidden;
+        flex-direction: column;
+        margin-top: 24px;
+      }
+      .icon-banners h4 {
+        margin-bottom: 8px;
+      }
+      .icon-banner {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .icon-banner img {
+        width: 23%;
+        margin-right: 2%;
+        margin-bottom: 2%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="main">
+      <canvas
+        id="jallowPinsCanvas"
+        width="900"
+        height="900"
+        style="width: 300px; height: 300px;"
+      ></canvas>
+      <div class="form-item">
+        <label for="avatar">💛 请选择头像图片:</label>
+        <input type="file" id="avatar" name="avatar" accept="image/*" />
+      </div>
+      <div class="divider">----------------------------</div>
+      <div class="icon-banners">
+        <h4>请选择你的 Icon Pin 😆:</h4>
+        <h4>🧑‍🎨 Designer:</h4>
+        <div class="icon-banner">
+          <img src="./icons/Designer/Adobe.png" />
+          <img src="./icons/Designer/Ae.png" />
+          <img src="./icons/Designer/ai.png" />
+          <img src="./icons/Designer/Pr.png" />
+        </div>
+        <h4>🧑‍💻 Front end:</h4>
+        <div class="icon-banner">
+          <img src="./icons/FroneEnd/html.png" />
+          <img src="./icons/FroneEnd/react.png" />
+          <img src="./icons/FroneEnd/vue.png" />
+        </div>
+        <h4>🧑‍💻 Back end:</h4>
+        <div class="icon-banner">
+          <img src="./icons/backEnd/go_gopher.png" />
+          <img src="./icons/backEnd/haskell.png" />
+          <img src="./icons/backEnd/java.png" />
+          <img src="./icons/backEnd/php.png" />
+          <img src="./icons/backEnd/python.png" />
+          <img src="./icons/backEnd/r.png" />
+          <img src="./icons/backEnd/ruby.png" />
+          <img src="./icons/backEnd/rust.png" />
+        </div>
+        <h4>🧑‍💼 Office:</h4>
+        <div class="icon-banner">
+          <img src="./icons/office/excel.png" />
+          <img src="./icons/office/powerpoint.png" />
+          <img src="./icons/office/word.png" />
+        </div>
+        <h4>🙋 Other:</h4>
+        <div class="icon-banner">
+          <img src="./icons/other/c4d.jpg" />
+          <img src="./icons/other/unity.png" />
+        </div>
+        <h4>📲 Phone:</h4>
+        <div class="icon-banner">
+          <img src="./icons/phone/android.png" />
+          <img src="./icons/phone/applescript.png" />
+          <img src="./icons/phone/swift.png" />
+        </div>
+      </div>
+    </div>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+    ></script>
+    <script>
+      var canvasSize = 300;
+      var iconSize = 60;
+      var canvas = document.getElementById("jallowPinsCanvas");
+      var ctx = canvas.getContext("2d");
+      var pixelRatio = getPixelRatio(ctx);
+      canvas.width = canvasSize * pixelRatio;
+      canvas.height = canvasSize * pixelRatio;
+      function drawAvatar(imgSrc) {
+        // 新建 Image 对象
+        var img = new Image();
+        // 设置 Image src
+        img.src = imgSrc;
+        // Image 加载完毕后画到 canvas 上
+        img.onload = () => {
+          ctx.drawImage(
+            img,
+            0,
+            0,
+            canvasSize * pixelRatio,
+            canvasSize * pixelRatio
+          );
+          changeCanvasVisible(true);
+          changeIconBannerVisible(true);
+        };
+      }
+      function drawIconBorder() {
+        ctx.beginPath();
+        ctx.arc(
+          canvasSize * pixelRatio * 0.675 + iconSize * pixelRatio / 2, 
+          canvasSize * pixelRatio * 0.675 + iconSize * pixelRatio / 2, 
+          iconSize * pixelRatio / 2 + 5, 
+          0, 
+          2 * Math.PI, 
+          false
+        );
+        ctx.lineWidth = 10;
+        ctx.strokeStyle = '#fff';
+        ctx.stroke();
+      }
+      function drawIcon(imgSrc) {
+        // 新建 Image 对象
+        var img = new Image();
+        // 设置 Image src
+        img.src = imgSrc;
+        // Image 加载完毕后画到 canvas 上
+        img.onload = () => {
+          drawIconBorder();
+          ctx.drawImage(
+            img,
+            canvasSize * pixelRatio * 0.675,
+            canvasSize * pixelRatio * 0.675,
+            iconSize * pixelRatio,
+            iconSize * pixelRatio
+          );
+        };
+      }
+      function changeCanvasVisible(visible) {
+        canvas.style.display = visible ? "block" : "none";
+      }
+      function changeIconBannerVisible(visible) {
+        $('.divider').css('visibility', visible ? 'visible' : 'hidden');
+        $('.icon-banners').css('visibility', visible ? 'visible' : 'hidden');
+      }
+      function inputChangeListener() {
+        $("#avatar").change(function (e) {
+          var file = e.target.files[0];
+          var reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onloadend = function (e) {
+            drawAvatar(e.target.result);
+          };
+        });
+      }
+      function imgClickListener() {
+        $(".icon-banners").click(function (e) {
+          if (e.target.nodeName === "IMG") {
+            drawIcon(e.target.src, pixelRatio);
+          }
+        });
+      }
+      function getPixelRatio(context) {
+        var backingStore =
+          context.backingStorePixelRatio ||
+          context.webkitBackingStorePixelRatio ||
+          context.mozBackingStorePixelRatio ||
+          context.msBackingStorePixelRatio ||
+          context.oBackingStorePixelRatio ||
+          context.backingStorePixelRatio ||
+          1;
+        return (window.devicePixelRatio || 1) / backingStore;
+      }
+      /* ～～～～～ main ～～～～～ */
+      $(document).ready(function () {
+        console.log("(｡･ω･｡)ﾉ💛～ document ready");
+        inputChangeListener();
+        imgClickListener();
+      });
+    </script>
+  </body>
+</html>
