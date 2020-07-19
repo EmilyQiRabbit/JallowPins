@@ -8,7 +8,7 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 
-app.use(express.static(require('path').join(__dirname, 'views/public')));
+app.use(express.static(require('path').join(__dirname, 'views')));
 
 app.set("views", __dirname);
 
