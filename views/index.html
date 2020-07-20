@@ -86,7 +86,7 @@
         <input type="file" id="avatar" name="avatar" accept="image/*" />
       </div>
       <div>
-        <button class='download-btn'>💛 下载 Jallow Pins 头像 💛</button>
+        <button class="download-btn">💛 下载 Jallow Pins 头像 💛</button>
       </div>
       <div class="divider">----------------------------</div>
       <div class="icon-banners">
@@ -138,6 +138,7 @@
       type="text/javascript"
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
     <script>
       var canvasSize = 300;
       var iconSize = 60;
@@ -153,13 +154,52 @@
         img.src = imgSrc;
         // Image 加载完毕后画到 canvas 上
         img.onload = () => {
-          ctx.drawImage(
-            img,
-            0,
-            0,
-            canvasSize * pixelRatio,
-            canvasSize * pixelRatio
-          );
+          // 由于 mobile Orientation 导致的旋转问题。
+          window.EXIF.getData(img, function () {
+            const orientation = EXIF.getTag(this, "Orientation");
+            switch (orientation) {
+              case 3:
+                ctx.rotate(Math.PI);
+                ctx.drawImage(
+                  img,
+                  -canvasSize * pixelRatio,
+                  -canvasSize * pixelRatio,
+                  canvasSize * pixelRatio,
+                  canvasSize * pixelRatio
+                );
+                break;
+              case 6:
+                ctx.rotate(0.5 * Math.PI);
+                ctx.drawImage(
+                  img,
+                  0,
+                  -canvasSize * pixelRatio,
+                  canvasSize * pixelRatio,
+                  canvasSize * pixelRatio
+                );
+                break;
+              case 1:
+              case 8:
+                ctx.rotate((3 * Math.PI) / 2);
+                ctx.drawImage(
+                  img,
+                  -canvasSize * pixelRatio,
+                  0,
+                  canvasSize * pixelRatio,
+                  canvasSize * pixelRatio
+                );
+                break;
+              default:
+                break;
+            }
+          });
+          // ctx.drawImage(
+          //   img,
+          //   0,
+          //   0,
+          //   canvasSize * pixelRatio,
+          //   canvasSize * pixelRatio
+          // );
           changeCanvasVisible(true);
           changeIconBannerVisible(true);
           changeDownloadBtnVisible(true);
@@ -168,15 +208,15 @@
       function drawIconBorder() {
         ctx.beginPath();
         ctx.arc(
-          canvasSize * pixelRatio * 0.675 + iconSize * pixelRatio / 2, 
-          canvasSize * pixelRatio * 0.675 + iconSize * pixelRatio / 2, 
-          iconSize * pixelRatio / 2 + 5, 
-          0, 
-          2 * Math.PI, 
+          canvasSize * pixelRatio * 0.675 + (iconSize * pixelRatio) / 2,
+          canvasSize * pixelRatio * 0.675 + (iconSize * pixelRatio) / 2,
+          (iconSize * pixelRatio) / 2 + 5,
+          0,
+          2 * Math.PI,
           false
         );
         ctx.lineWidth = 10;
-        ctx.strokeStyle = '#fff';
+        ctx.strokeStyle = "#fff";
         ctx.stroke();
       }
       function drawIcon(imgSrc) {
@@ -200,12 +240,12 @@
         canvas.style.display = visible ? "block" : "none";
       }
       function changeIconBannerVisible(visible) {
-        $('.divider').css('visibility', visible ? 'visible' : 'hidden');
-        $('.icon-banners').css('visibility', visible ? 'visible' : 'hidden');
-        $('.icon-banners').css('height', visible ? 'auto' : '0');
+        $(".divider").css("visibility", visible ? "visible" : "hidden");
+        $(".icon-banners").css("visibility", visible ? "visible" : "hidden");
+        $(".icon-banners").css("height", visible ? "auto" : "0");
       }
       function changeDownloadBtnVisible(visible) {
-        $('.download-btn').css('visibility', visible ? 'visible' : 'hidden');
+        $(".download-btn").css("visibility", visible ? "visible" : "hidden");
       }
       function inputChangeListener() {
         $("#avatar").change(function (e) {
@@ -238,17 +278,21 @@
       function downloadCanvasImg() {
         var MIME_TYPE = "image/png";
         var imgURL = canvas.toDataURL(MIME_TYPE);
-        var dlLink = document.createElement('a');
-        dlLink.download = 'JallowPinsAvatar';
+        var dlLink = document.createElement("a");
+        dlLink.download = "JallowPinsAvatar";
         dlLink.href = imgURL;
-        dlLink.dataset.downloadurl = [MIME_TYPE, dlLink.download, dlLink.href].join(':');
+        dlLink.dataset.downloadurl = [
+          MIME_TYPE,
+          dlLink.download,
+          dlLink.href,
+        ].join(":");
 
         document.body.appendChild(dlLink);
         dlLink.click();
         document.body.removeChild(dlLink);
       }
       function downloadBtnListener() {
-        $('.download-btn').click(downloadCanvasImg)
+        $(".download-btn").click(downloadCanvasImg);
       }
       /* ～～～～～ main ～～～～～ */
       $(document).ready(function () {
