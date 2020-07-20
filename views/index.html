@@ -167,6 +167,7 @@
                   canvasSize * pixelRatio,
                   canvasSize * pixelRatio
                 );
+                ctx.rotate(-Math.PI);
                 break;
               case 6:
                 ctx.rotate(0.5 * Math.PI);
@@ -177,8 +178,8 @@
                   canvasSize * pixelRatio,
                   canvasSize * pixelRatio
                 );
+                ctx.rotate(-0.5 * Math.PI);
                 break;
-              case 1:
               case 8:
                 ctx.rotate((3 * Math.PI) / 2);
                 ctx.drawImage(
@@ -188,18 +189,20 @@
                   canvasSize * pixelRatio,
                   canvasSize * pixelRatio
                 );
+                // 必须旋转回来！
+                ctx.rotate(-(3 * Math.PI) / 2);
                 break;
               default:
+                ctx.drawImage(
+                  img,
+                  0,
+                  0,
+                  canvasSize * pixelRatio,
+                  canvasSize * pixelRatio
+                );
                 break;
             }
           });
-          // ctx.drawImage(
-          //   img,
-          //   0,
-          //   0,
-          //   canvasSize * pixelRatio,
-          //   canvasSize * pixelRatio
-          // );
           changeCanvasVisible(true);
           changeIconBannerVisible(true);
           changeDownloadBtnVisible(true);

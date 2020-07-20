@@ -4,6 +4,7 @@
   "description": "* 灵感来自 @杰克有茶\r * 设计狮 @NNOUU\r * 前端攻城狮 @EMILY喵\r * 后端工程狮 + 运维 @杰克有茶",
   "main": "App.js",
   "scripts": {
+    "start": "node App.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
