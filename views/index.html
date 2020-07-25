@@ -142,8 +142,11 @@
       var canvas = document.getElementById("jallowPinsCanvas");
       var ctx = canvas.getContext("2d");
       var pixelRatio = getPixelRatio(ctx);
-      canvas.width = canvasSize * pixelRatio;
-      canvas.height = canvasSize * pixelRatio;
+      const canvasRealWidth = canvasSize * pixelRatio;
+      const canvasRealHeight = canvasRealWidth; // 正方形
+      canvas.width = canvasRealWidth;
+      canvas.height = canvasRealHeight;
+      const iconRealSize = iconSize * pixelRatio;
       function drawAvatar(imgSrc) {
         // 新建 Image 对象
         var img = new Image();
@@ -154,15 +157,24 @@
           // 由于 mobile Orientation 导致的旋转问题。
           window.EXIF.getData(img, function () {
             const orientation = EXIF.getTag(this, "Orientation");
+            ctx.save();
+            ctx.arc(
+              canvasRealWidth / 2,
+              canvasRealHeight / 2,
+              canvasRealWidth / 2,
+              0,
+              2 * Math.PI
+            );
+            ctx.clip();
             switch (orientation) {
               case 3:
                 ctx.rotate(Math.PI);
                 ctx.drawImage(
                   img,
-                  -canvasSize * pixelRatio,
-                  -canvasSize * pixelRatio,
-                  canvasSize * pixelRatio,
-                  canvasSize * pixelRatio
+                  -canvasRealWidth,
+                  -canvasRealHeight,
+                  canvasRealWidth,
+                  canvasRealHeight
                 );
                 ctx.rotate(-Math.PI);
                 break;
@@ -171,9 +183,9 @@
                 ctx.drawImage(
                   img,
                   0,
-                  -canvasSize * pixelRatio,
-                  canvasSize * pixelRatio,
-                  canvasSize * pixelRatio
+                  -canvasRealHeight,
+                  canvasRealWidth,
+                  canvasRealHeight
                 );
                 ctx.rotate(-0.5 * Math.PI);
                 break;
@@ -181,22 +193,16 @@
                 ctx.rotate((3 * Math.PI) / 2);
                 ctx.drawImage(
                   img,
-                  -canvasSize * pixelRatio,
+                  canvasRealWidth,
                   0,
-                  canvasSize * pixelRatio,
-                  canvasSize * pixelRatio
+                  canvasRealWidth,
+                  canvasRealHeight
                 );
                 // 必须旋转回来！
                 ctx.rotate(-(3 * Math.PI) / 2);
                 break;
               default:
-                ctx.drawImage(
-                  img,
-                  0,
-                  0,
-                  canvasSize * pixelRatio,
-                  canvasSize * pixelRatio
-                );
+                ctx.drawImage(img, 0, 0, canvasRealWidth, canvasRealHeight);
                 break;
             }
           });
@@ -208,16 +214,14 @@
       function drawIconBorder() {
         ctx.beginPath();
         ctx.arc(
-          canvasSize * pixelRatio * 0.675 + (iconSize * pixelRatio) / 2,
-          canvasSize * pixelRatio * 0.675 + (iconSize * pixelRatio) / 2,
-          (iconSize * pixelRatio) / 2 + 5,
+          canvasRealWidth * 0.675 + iconRealSize / 2,
+          canvasRealHeight * 0.675 + iconRealSize / 2,
+          iconRealSize / 2 + 8,
           0,
-          2 * Math.PI,
-          false
+          2 * Math.PI
         );
-        ctx.lineWidth = 10;
-        ctx.strokeStyle = "#fff";
-        ctx.stroke();
+        ctx.fillStyle = "#fff";
+        ctx.fill();
       }
       function drawIcon(imgSrc) {
         // 新建 Image 对象
@@ -229,10 +233,10 @@
           drawIconBorder();
           ctx.drawImage(
             img,
-            canvasSize * pixelRatio * 0.675,
-            canvasSize * pixelRatio * 0.675,
-            iconSize * pixelRatio,
-            iconSize * pixelRatio
+            canvasRealWidth * 0.675,
+            canvasRealHeight * 0.675,
+            iconRealSize,
+            iconRealSize
           );
         };
       }
