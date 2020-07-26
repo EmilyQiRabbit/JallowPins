@@ -34,6 +34,11 @@
         margin-bottom: 15px;
         border-radius: 150px;
       }
+      #avatarImg {
+        display: none;
+        width: 300px;
+        height: 300px;
+      }
       .download-btn {
         visibility: hidden;
         border: 0;
@@ -81,6 +86,7 @@
         height="900"
         style="width: 300px; height: 300px;"
       ></canvas>
+      <img id="avatarImg" src=""/>
       <div class="form-item">
         <label for="avatar">🙌 请选择头像图片:</label>
         <input type="file" id="avatar" name="avatar" accept="image/*" />
@@ -140,13 +146,14 @@
       var canvasSize = 300;
       var iconSize = 60;
       var canvas = document.getElementById("jallowPinsCanvas");
+      var image = $("#avatarImg");
       var ctx = canvas.getContext("2d");
       var pixelRatio = getPixelRatio(ctx);
-      const canvasRealWidth = canvasSize * pixelRatio;
-      const canvasRealHeight = canvasRealWidth; // 正方形
+      var canvasRealWidth = canvasSize * pixelRatio;
+      var canvasRealHeight = canvasRealWidth; // 正方形
       canvas.width = canvasRealWidth;
       canvas.height = canvasRealHeight;
-      const iconRealSize = iconSize * pixelRatio;
+      var iconRealSize = iconSize * pixelRatio;
       function drawAvatar(imgSrc) {
         // 新建 Image 对象
         var img = new Image();
@@ -206,10 +213,17 @@
                 break;
             }
           });
-          changeCanvasVisible(true);
+          drawCanvas2Image();
+          changeCanvasImageVisible(true);
           changeIconBannerVisible(true);
           changeDownloadBtnVisible(true);
         };
+      }
+      function drawCanvas2Image() {
+        // 把 canvas 的图像绘为 canvas img，方便长按保存
+        var MIME_TYPE = "image/png";
+        var imgURL = canvas.toDataURL(MIME_TYPE);
+        image.attr('src', imgURL);
       }
       function drawIconBorder() {
         ctx.beginPath();
@@ -238,10 +252,12 @@
             iconRealSize,
             iconRealSize
           );
+          drawCanvas2Image();
         };
       }
-      function changeCanvasVisible(visible) {
-        canvas.style.display = visible ? "block" : "none";
+      function changeCanvasImageVisible(visible) {
+        // canvas.style.display = visible ? "block" : "none";
+        image.css('display', visible ? "block" : "none");
       }
       function changeIconBannerVisible(visible) {
         $(".divider").css("visibility", visible ? "visible" : "hidden");
@@ -261,7 +277,7 @@
           };
         });
       }
-      function imgClickListener() {
+      function iconClickListener() {
         $(".icon-banners").click(function (e) {
           if (e.target.nodeName === "IMG") {
             drawIcon(e.target.src, pixelRatio);
@@ -302,7 +318,7 @@
       $(document).ready(function () {
         console.log("(｡･ω･｡)ﾉ💛～ document ready");
         inputChangeListener();
-        imgClickListener();
+        iconClickListener();
         downloadBtnListener();
       });
     </script>
