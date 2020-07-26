@@ -1,0 +1,67 @@
+* {
+  margin: 0;
+}
+#main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+  max-width: 500px;
+  margin: auto;
+}
+.form-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+.form-item label {
+  margin-bottom: 8px;
+}
+canvas {
+  display: none;
+  margin-bottom: 15px;
+  border-radius: 150px;
+}
+#avatarImg {
+  display: none;
+  width: 300px;
+  height: 300px;
+}
+.download-btn {
+  visibility: hidden;
+  border: 0;
+  background: none;
+}
+.divider {
+  white-space: nowrap;
+  visibility: hidden;
+}
+h3,
+h4 {
+  font-weight: normal;
+  margin-bottom: 16px;
+}
+.icon-banners {
+  display: flex;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  flex-direction: column;
+  margin-top: 24px;
+}
+.icon-banners h4 {
+  margin-bottom: 8px;
+}
+.icon-banner {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.icon-banner img {
+  width: 23%;
+  height: 23%;
+  margin-right: 2%;
+  margin-bottom: 2%;
+}
