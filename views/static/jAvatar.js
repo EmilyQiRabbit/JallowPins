@@ -19,15 +19,15 @@ function drawAvatar(imgSrc) {
     // 由于 mobile Orientation 导致的旋转问题。
     window.EXIF.getData(img, function () {
       var orientation = EXIF.getTag(this, "Orientation");
-      ctx.save();
-      ctx.arc(
-        canvasRealWidth / 2,
-        canvasRealHeight / 2,
-        canvasRealWidth / 2,
-        0,
-        2 * Math.PI
-      );
-      ctx.clip();
+      // ctx.save();
+      // ctx.arc(
+      //   canvasRealWidth / 2,
+      //   canvasRealHeight / 2,
+      //   canvasRealWidth / 2,
+      //   0,
+      //   2 * Math.PI
+      // );
+      // ctx.clip();
       switch (orientation) {
         case 3:
           ctx.rotate(Math.PI);

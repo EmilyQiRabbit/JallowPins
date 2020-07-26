@@ -1,8 +1,8 @@
-// 引用express
+// 引用 express
 var express = require("express");
 var bodyParser = require("body-parser");
-var multer = require("multer");
-var upload = multer();
+// var multer = require("multer");
+// var upload = multer();
 var app = express();
 
 app.use(bodyParser.json());
