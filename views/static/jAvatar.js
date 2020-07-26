@@ -15,10 +15,10 @@ function drawAvatar(imgSrc) {
   // 设置 Image src
   img.src = imgSrc;
   // Image 加载完毕后画到 canvas 上
-  img.onload = () => {
+  img.onload = function() {
     // 由于 mobile Orientation 导致的旋转问题。
     window.EXIF.getData(img, function () {
-      const orientation = EXIF.getTag(this, "Orientation");
+      var orientation = EXIF.getTag(this, "Orientation");
       ctx.save();
       ctx.arc(
         canvasRealWidth / 2,
@@ -98,7 +98,7 @@ function drawIcon(imgSrc) {
   // 设置 Image src
   img.src = imgSrc;
   // Image 加载完毕后画到 canvas 上
-  img.onload = () => {
+  img.onload = function() {
     drawIconBorder();
     ctx.drawImage(
       img,
