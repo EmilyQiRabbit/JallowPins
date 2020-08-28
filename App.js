@@ -21,7 +21,7 @@ app.get("/", function(req, res) {
 });
 
 // 监听端口
-let port = 9000;
+let port = 9100;
 app.listen(port, () => {
     console.log("正在监听" + port);
 })
