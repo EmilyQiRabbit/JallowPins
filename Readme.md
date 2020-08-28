@@ -6,7 +6,7 @@
 * 后端工程狮 + 运维 @杰克有茶
 
 #### 开发调试
-* 本地启动访问：http://localhost:9000/
+* 本地启动访问：http://localhost:9100/
 * Online 地址：http://jallow.lalahaha.com/
 
 TODOs：
