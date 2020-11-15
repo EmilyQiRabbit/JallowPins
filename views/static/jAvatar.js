@@ -1,11 +1,16 @@
 var canvasSize = 300;
 var iconSize = 60;
 var canvas = document.getElementById("jallowPinsCanvas");
-var image = $("#avatarImg");
+var copperImage = $("#copper-img");
+var image = $("#avatar-img");
+var preview = $(".previewBoxRound");
+var container = $("#cropper-container");
+var cropBtn = $(".cropper-btn");
 var ctx = canvas.getContext("2d");
 var pixelRatio = getPixelRatio(ctx);
 var canvasRealWidth = canvasSize * pixelRatio;
 var canvasRealHeight = canvasRealWidth; // 正方形
+let cropper = null;
 canvas.width = canvasRealWidth;
 canvas.height = canvasRealHeight;
 var iconRealSize = iconSize * pixelRatio;
@@ -69,7 +74,7 @@ function drawAvatar(imgSrc) {
             }
         });
         drawCanvas2Image();
-        changeCanvasImageVisible(true);
+        changeElementVisible(image, true);
         changeIconBannerVisible(true);
         changeDownloadBtnVisible(true);
     };
@@ -110,9 +115,8 @@ function drawIcon(imgSrc) {
         drawCanvas2Image();
     };
 }
-function changeCanvasImageVisible(visible) {
-    // canvas.style.display = visible ? "block" : "none";
-    image.css('display', visible ? "block" : "none");
+function changeElementVisible(ele, visible) {
+    ele && ele.css('display', visible ? "block" : "none");
 }
 function changeIconBannerVisible(visible) {
     $(".divider").css("visibility", visible ? "visible" : "hidden");
@@ -124,12 +128,38 @@ function changeDownloadBtnVisible(visible) {
 }
 function inputChangeListener() {
     $("#avatar").change(function (e) {
+        if (cropper) {
+            cropper.destroy();
+            changeElementVisible(copperImage, false);
+            changeElementVisible(preview, false);
+            changeElementVisible(container, false);
+            changeElementVisible(cropBtn, false);
+        }
         var file = e.target.files[0];
         var reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onloadend = function (e) {
-            drawAvatar(e.target.result);
-        };
+        reader.onload = function (e) {
+            changeElementVisible(copperImage, true);
+            changeElementVisible(preview, true);
+            changeElementVisible(container, true);
+            changeElementVisible(cropBtn, true);
+            let dataURL = reader.result;
+            copperImage[0].src = dataURL;
+            cropper && cropper.destroy();
+            cropper = new Cropper(copperImage[0], {
+                aspectRatio: 1,
+                minContainerWidth: 300,
+                minContainerHeight: 300,
+                autoCropArea: 1,
+                dragMode: 'move',
+                // preview: document.querySelector('.previewBoxRound'),
+            });
+            
+
+        }
+        // reader.onloadend = function (e) {
+        //     drawAvatar(e.target.result);
+        // };
     });
 }
 function iconClickListener() {
@@ -137,6 +167,18 @@ function iconClickListener() {
         if (e.target.nodeName === "IMG") {
             drawIcon(e.target.src, pixelRatio);
         }
+    });
+}
+function cropperBtnClickListener() {
+    cropBtn.on('click', function (e) {
+        if (cropper) {
+            const dataUrl = cropper.getCroppedCanvas().toDataURL();
+            drawAvatar(dataUrl);
+            changeElementVisible(preview, false);
+            changeElementVisible(container, false);
+            changeElementVisible(cropBtn, false);
+        }
+        console.log('cropperBtnClickListener');
     });
 }
 function getPixelRatio(context) {
@@ -174,5 +216,6 @@ jQuery(() => {
     console.log("(｡･ω･｡)ﾉ💛～ document ready");
     inputChangeListener();
     iconClickListener();
+    cropperBtnClickListener();
     downloadBtnListener();
 })

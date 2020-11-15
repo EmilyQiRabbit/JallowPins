@@ -24,7 +24,7 @@ canvas {
   margin-bottom: 15px;
   border-radius: 150px;
 }
-#avatarImg {
+#avatar-img, #copper-img {
   display: none;
   width: 300px;
   height: 300px;
@@ -65,4 +65,28 @@ h4 {
   height: 23%;
   margin-right: 2%;
   margin-bottom: 2%;
+}
+
+.previewBoxRound {
+  box-shadow: 0 0 5px #adadad;
+  width: 100px;
+  height: 100px;
+  margin: 30px auto;
+  border-radius: 50%;
+  overflow: hidden; /* 这个超出设置为隐藏很重要 */
+  display: none;
+}
+
+#cropper-container {
+  width: 100%;
+  margin: 0 auto 16px;
+  height: 400px;
+  display: none;
+}
+
+.cropper-btn {
+  display: none;
+  border: 0;
+  background: none;
+  margin-bottom: 8px;
 }

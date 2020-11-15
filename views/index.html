@@ -12,13 +12,20 @@
     </head>
     <body>
         <div id="main">
+            <div id="cropper-container">
+                <img id="copper-img" src="" />
+                <!-- <div class="previewBoxRound"></div> -->
+            </div>
+            <div>
+                <button class="cropper-btn">💛 完成裁剪 💛</button>
+            </div>
+            <img id="avatar-img" src="" />
             <canvas
                 id="jallowPinsCanvas"
                 width="900"
                 height="900"
                 style="width: 300px; height: 300px;"
             ></canvas>
-            <img id="avatarImg" src=""/>
             <div class="form-item">
                 <label for="avatar">🙌 请选择头像图片:</label>
                 <input type="file" id="avatar" name="avatar" accept="image/*" />
@@ -76,6 +83,6 @@
         <script type="text/javascript" src="./static/dist/exif.js"></script>
         <script type="text/javascript" src="./static/dist/cropper.min.js"></script>
         <script type="text/javascript" src="./static/dist/jquery-cropper.min.js"></script>
-        <script type="text/javascript" src="./static/jAvatar.min.js"></script>
+        <script type="text/javascript" src="./static/jAvatar.js"></script>
     </body>
 </html>
