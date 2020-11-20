@@ -9,6 +9,14 @@
   max-width: 500px;
   margin: auto;
 }
+.primary-btn {
+  color: #fff;
+  background: #1890ff;
+  box-shadow: 0 2px 0 rgba(0,0,0,.015);
+  border: 1px solid #1890ff;
+  border-radius: 2px;
+  padding: 5px 10px;
+}
 .form-item {
   display: flex;
   flex-direction: column;
@@ -32,8 +40,6 @@ canvas {
 }
 .download-btn {
   visibility: hidden;
-  border: 0;
-  background: none;
 }
 .divider {
   white-space: nowrap;
@@ -85,8 +91,10 @@ h4 {
 }
 
 .cropper-btn {
+  margin-bottom: 8px;
   display: none;
-  border: 0;
-  background: none;
+}
+
+.cropper-btn > button {
   margin-bottom: 8px;
 }
