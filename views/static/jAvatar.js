@@ -134,6 +134,9 @@ function inputChangeListener() {
             changeElementVisible(preview, false);
             changeElementVisible(container, false);
             changeElementVisible(cropBtn, false);
+            changeElementVisible(image, false);
+            changeIconBannerVisible(false);
+            changeDownloadBtnVisible(false);
         }
         var file = e.target.files[0];
         var reader = new FileReader();
@@ -157,9 +160,6 @@ function inputChangeListener() {
             
 
         }
-        // reader.onloadend = function (e) {
-        //     drawAvatar(e.target.result);
-        // };
     });
 }
 function iconClickListener() {
