@@ -10,7 +10,7 @@ var ctx = canvas.getContext("2d");
 var pixelRatio = getPixelRatio(ctx);
 var canvasRealWidth = canvasSize * pixelRatio;
 var canvasRealHeight = canvasRealWidth; // 正方形
-let cropper = null;
+var cropper = null;
 canvas.width = canvasRealWidth;
 canvas.height = canvasRealHeight;
 var iconRealSize = iconSize * pixelRatio;
@@ -146,7 +146,7 @@ function inputChangeListener() {
             changeElementVisible(preview, true);
             changeElementVisible(container, true);
             changeElementVisible(cropBtn, true);
-            let dataURL = reader.result;
+            var dataURL = reader.result;
             copperImage[0].src = dataURL;
             cropper && cropper.destroy();
             cropper = new Cropper(copperImage[0], {
@@ -172,7 +172,7 @@ function iconClickListener() {
 function cropperBtnClickListener() {
     cropBtn.on('click', function (e) {
         if (cropper) {
-            const dataUrl = cropper.getCroppedCanvas().toDataURL();
+            var dataUrl = cropper.getCroppedCanvas().toDataURL();
             drawAvatar(dataUrl);
             changeElementVisible(preview, false);
             changeElementVisible(container, false);
@@ -212,8 +212,8 @@ function downloadBtnListener() {
     $(".download-btn").click(downloadCanvasImg);
 }
 /* ～～～～～ main ～～～～～ */
-jQuery(() => {
-    console.log("(｡･ω･｡)ﾉ💛～ document ready");
+jQuery(function() {
+    console.log("document ready");
     inputChangeListener();
     iconClickListener();
     cropperBtnClickListener();
