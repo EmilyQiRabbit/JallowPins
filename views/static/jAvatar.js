@@ -119,7 +119,6 @@ function changeElementVisible(ele, visible) {
     ele && ele.css('display', visible ? "block" : "none");
 }
 function changeIconBannerVisible(visible) {
-    $(".divider").css("visibility", visible ? "visible" : "hidden");
     $(".icon-banners").css("visibility", visible ? "visible" : "hidden");
     $(".icon-banners").css("height", visible ? "auto" : "0");
 }

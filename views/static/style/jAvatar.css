@@ -37,12 +37,9 @@ canvas {
   width: 300px;
   height: 300px;
   border-radius: 150px;
+  margin-bottom: 16px;
 }
 .download-btn {
-  visibility: hidden;
-}
-.divider {
-  white-space: nowrap;
   visibility: hidden;
 }
 h3,
