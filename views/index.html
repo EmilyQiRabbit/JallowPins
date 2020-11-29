@@ -3,89 +3,24 @@
     <head>
         <meta charset="UTF-8" />
         <title>Jallow Pins</title>
+        <link rel="icon" href="/icons/Favicon/jsicon.png" type="image/x-icon">
         <meta
             name="viewport"
             content="width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"
         />
         <link rel="stylesheet" type="text/css" href="./static/style/jAvatar.css" />
-        <link rel="stylesheet" type="text/css" href="./static/style/cropper.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.9/cropper.css" integrity="sha512-949FvIQOibfhLTgmNws4F3DVlYz3FmCRRhJznR22hx76SKkcpZiVV5Kwo0iwK9L6BFuY+6mpdqB2+vDIGVuyHg==" crossorigin="anonymous" />
     </head>
     <body>
-        <div id="main">
-            <div class="form-item">
-                <label for="avatar">🙌 选择头像图片:</label>
-                <input type="file" id="avatar" name="avatar" accept="image/*" />
-            </div>
-            <div id="cropper-container">
-                <img id="copper-img" src="" />
-                <!-- <div class="previewBoxRound"></div> -->
-            </div>
-            <div class="cropper-btn">
-                <button class='primary-btn'>💛 完成裁剪 💛</button>
-            </div>
-            <img id="avatar-img" src="" />
-            <canvas
-                id="jallowPinsCanvas"
-                width="900"
-                height="900"
-                style="width: 300px; height: 300px;"
-            ></canvas>
-            <div>
-                <button class="download-btn primary-btn">💛 下载 Jallow Pins 头像 💛</button>
-            </div>
-            <div class="icon-banners">
-                <h4>请选择你的 Icon Pin 😆:</h4>
-                <h4>🧑‍🎨 Designer:</h4>
-                <div class="icon-banner">
-                    <img src="icons/Designer/Adobe.png" />
-                    <img src="icons/Designer/Ae.png" />
-                    <img src="icons/Designer/ai.png" />
-                    <img src="icons/Designer/Pr.png" />
-                </div>
-                <h4>🧑‍💻 Front end:</h4>
-                <div class="icon-banner">
-                    <img src="icons/FroneEnd/html.png" />
-                    <img src="icons/FroneEnd/react.png" />
-                    <img src="icons/FroneEnd/vue.png" />
-                </div>
-                <h4>🧑‍💻 Back end:</h4>
-                <div class="icon-banner">
-                    <img src="icons/backEnd/go_gopher.png" />
-                    <img src="icons/backEnd/haskell.png" />
-                    <img src="icons/backEnd/java.png" />
-                    <img src="icons/backEnd/php.png" />
-                    <img src="icons/backEnd/python.png" />
-                    <img src="icons/backEnd/r.png" />
-                    <img src="icons/backEnd/ruby.png" />
-                    <img src="icons/backEnd/rust.png" />
-                </div>
-                <h4>🧑‍💼 Office:</h4>
-                <div class="icon-banner">
-                    <img src="icons/office/excel.png" />
-                    <img src="icons/office/powerpoint.png" />
-                    <img src="icons/office/word.png" />
-                </div>
-                <h4>🙋 Other:</h4>
-                <div class="icon-banner">
-                    <img src="icons/other/c4d.jpg" />
-                    <img src="icons/other/unity.png" />
-                </div>
-                <h4>📲 Phone:</h4>
-                <div class="icon-banner">
-                    <img src="icons/phone/android.png" />
-                    <img src="icons/phone/applescript.png" />
-                    <img src="icons/phone/swift.png" />
-                </div>
-            </div>
-        </div>
-        <script type="text/javascript" src="./static/dist/jquery.min.js"></script>
+        <div id="root"></div>
         <script type="text/javascript" src="./static/dist/exif.js"></script>
-        <script type="text/javascript" src="./static/dist/cropper.min.js"></script>
-        <script type="text/javascript" src="./static/dist/jquery-cropper.min.js"></script>
-        <script type="text/javascript" src="./static/jAvatar.js"></script>    
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.9/cropper.min.js"></script>
         <!-- Load React. -->
         <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
-        <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
-        <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+        <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <!-- Load React component. -->
+        <script type="text/babel" src="./static/jAvatar.js"></script>
     </body>
 </html>

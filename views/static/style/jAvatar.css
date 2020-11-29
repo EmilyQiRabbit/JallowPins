@@ -1,7 +1,7 @@
 * {
   margin: 0;
 }
-#main {
+#root {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,6 +16,10 @@
   border: 1px solid #1890ff;
   border-radius: 2px;
   padding: 5px 10px;
+}
+.reupload-btn {
+  margin-bottom: 16px;
+  margin-left: 8px;
 }
 .form-item {
   display: flex;
@@ -33,14 +37,11 @@ canvas {
   border-radius: 150px;
 }
 #avatar-img, #copper-img {
-  display: none;
+  display: block;
   width: 300px;
   height: 300px;
   border-radius: 150px;
   margin-bottom: 16px;
-}
-.download-btn {
-  visibility: hidden;
 }
 h3,
 h4 {
@@ -49,8 +50,6 @@ h4 {
 }
 .icon-banners {
   display: flex;
-  visibility: hidden;
-  height: 0;
   overflow: hidden;
   flex-direction: column;
   margin-top: 24px;
@@ -77,19 +76,16 @@ h4 {
   margin: 30px auto;
   border-radius: 50%;
   overflow: hidden; /* 这个超出设置为隐藏很重要 */
-  display: none;
 }
 
 #cropper-container {
   width: 100%;
   margin: 0 auto 16px;
   height: 400px;
-  display: none;
 }
 
 .cropper-btn {
   margin-bottom: 8px;
-  display: none;
 }
 
 .cropper-btn > button {
