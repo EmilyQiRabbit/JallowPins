@@ -35,7 +35,7 @@ function drawIconBorder(ctx, canvasRealWidth, canvasRealHeight, iconRealSize) {
 
 function Icons(props) {
     const { canvasRef, imageRef, canvasRealWidth, canvasRealHeight, iconRealSize } = props;
-    const imgFileName = 'icons';
+    // const imgFileName = 'icons';
     const iconsGroup = [{
         title: '🧑‍🎨 Designer:',
         dirName: 'Designer',
@@ -50,15 +50,15 @@ function Icons(props) {
         files: ['go_gopher', 'haskell', 'java', 'php', 'python', 'r', 'ruby', 'rust']
     }, {
         title: '🧑‍💼 Office:',
-        dirName: 'office',
+        dirName: 'Office',
         files: ['excel', 'powerpoint', 'word']
     }, {
         title: '🙋 Other:',
-        dirName: 'other',
+        dirName: 'Other',
         files: ['c4d', 'unity']
     }, {
         title: '📲 Phone:',
-        dirName: 'phone',
+        dirName: 'Phone',
         files: ['android', 'applescript', 'swift']
     },]
     function handleIconClick(e) {
@@ -92,10 +92,10 @@ function Icons(props) {
                     <h4>{title}</h4>
                     <div className="icon-banner">
                         {
-                            files.map(function(file) {
+                            files.map(function(fileName) {
                                 return <img
-                                            key={`${dirName}/${file}`}
-                                            src={`${imgFileName}/${dirName}/${file}.png`}
+                                            key={`${dirName}/${fileName}`}
+                                            src={`${window.PinsImages[fileName]}`}
                                             onClick={handleIconClick}
                                         />
                             })
