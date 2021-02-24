@@ -4,7 +4,7 @@
   "description": "* 灵感来自 @杰克有茶\r * 设计狮 @NNOUU\r * 前端攻城狮 @EMILY喵\r * 后端工程狮 + 运维 @杰克有茶",
   "main": "App.js",
   "scripts": {
-    "build": "npx uglifyjs ./views/static/jAvatar.js -o ./views/static/jAvatar.min.js -c -m",
+    "build": "npx uglifyjs ./views/src/jAvatar.js -o ./views/src/jAvatar.min.js -c -m",
     "start": "node App.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
