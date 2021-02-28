@@ -57,6 +57,11 @@ h4 {
 .icon-banners h4 {
   margin-bottom: 8px;
 }
+.icon-banners h4 .upload-custom-icon {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+}
 .icon-banner {
   display: flex;
   flex-direction: row;

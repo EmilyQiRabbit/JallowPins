@@ -15,8 +15,9 @@ function getPixelRatio(context) {
     return (window.devicePixelRatio || 1) / backingStore;
 }
 function drawCanvas2Image(canvas, image) {
-    // 把 canvas 的图像绘为 canvas img，方便长按保存
-    var MIME_TYPE = "image/png";
+    // 把 canvas 的图像绘为 img，方便长按保存。
+    // 真正展示出来的其实是 image，canvas 隐藏起来负责处理图像。
+    var MIME_TYPE = 'image/png';
     var imgURL = canvas.toDataURL(MIME_TYPE);
     image.setAttribute('src', imgURL);
 }
@@ -68,8 +69,7 @@ function IconsComponent(props) {
             files: ['android', 'applescript', 'swift']
         }
     ];
-    function handleIconClick(e) {
-        const imgSrc = e.target.src;
+    function drawImage2Canvas(imgSrc, isCustom = false) {
         const canvas = canvasRef.current;
         const image = imageRef.current;
         const ctx = canvas.getContext('2d');
@@ -79,14 +79,64 @@ function IconsComponent(props) {
         img.src = imgSrc;
         // Image 加载完毕后画到 canvas 上
         img.onload = function () {
-            drawIconBorder(ctx, canvasRealWidth, canvasRealHeight, iconRealSize);
-            ctx.drawImage(img, canvasRealWidth * 0.675, canvasRealHeight * 0.675, iconRealSize, iconRealSize);
-            drawCanvas2Image(canvas, image);
+            if (isCustom) {
+                // 自定义角标
+                drawIconBorder(ctx, canvasRealWidth, canvasRealHeight, iconRealSize);
+                // let region = new Path2D();
+                ctx.beginPath();
+                ctx.arc(
+                    canvasRealWidth * 0.675 + iconRealSize / 2,
+                    canvasRealHeight * 0.675 + iconRealSize / 2,
+                    iconRealSize / 2,
+                    0,
+                    2 * Math.PI
+                );
+                ctx.clip();
+                ctx.drawImage(
+                    img,
+                    canvasRealWidth * 0.675 - 8,
+                    canvasRealHeight * 0.675 - 8,
+                    iconRealSize + 16,
+                    iconRealSize + 16
+                );
+                // ctx.restore();
+                drawCanvas2Image(canvas, image);
+            } else {
+                // 选择现成的
+                drawIconBorder(ctx, canvasRealWidth, canvasRealHeight, iconRealSize);
+                ctx.drawImage(img, canvasRealWidth * 0.675, canvasRealHeight * 0.675, iconRealSize, iconRealSize);
+                drawCanvas2Image(canvas, image);
+            }
+        };
+    }
+    function handleIconClick(e) {
+        const imgSrc = e.target.src;
+        drawImage2Canvas(imgSrc);
+    }
+    function onCustomUploadChange(e) {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            const dataURL = reader.result;
+            drawImage2Canvas(dataURL, true);
         };
     }
     return (
         <div className="icon-banners">
-            <h4>请选择你的 Icon Pin 😆:</h4>
+            <h4>
+                请选择角标图，或
+                <div className="upload-custom-icon">
+                    <label>自定义：</label>
+                    <input
+                        type="file"
+                        id="customPin"
+                        name="customPin"
+                        accept="image/*"
+                        onChange={onCustomUploadChange}
+                    />
+                </div>
+            </h4>
             {iconsGroup.map(function (iconItem, index) {
                 const {title, dirName, files} = iconItem;
                 return (
@@ -117,9 +167,9 @@ function UploadInputComponent(props) {
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onload = function (e) {
-            switchStatus(STATUS.CROPPER);
+        reader.onload = function () {
             const dataURL = reader.result;
+            switchStatus(STATUS.CROPPER);
             setUploadData(dataURL);
         };
     }
@@ -184,7 +234,7 @@ function DownLoadBtnComponent(props) {
     }
     return (
         <button className="download-btn primary-btn" onClick={handleBtnClick}>
-            下载 Jallow Pins 头像
+            下载头像
         </button>
     );
 }
