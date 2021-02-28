@@ -33,82 +33,85 @@ function drawIconBorder(ctx, canvasRealWidth, canvasRealHeight, iconRealSize) {
     ctx.fill();
 }
 
-function Icons(props) {
-    const { canvasRef, imageRef, canvasRealWidth, canvasRealHeight, iconRealSize } = props;
+function IconsComponent(props) {
+    const {canvasRef, imageRef, canvasRealWidth, canvasRealHeight, iconRealSize} = props;
     // const imgFileName = 'icons';
-    const iconsGroup = [{
-        title: '🧑‍🎨 Designer:',
-        dirName: 'Designer',
-        files: ['Adobe', 'Ae', 'ai', 'Pr']
-    }, {
-        title: '🧑‍💻 Front end:',
-        dirName: 'FroneEnd',
-        files: ['html', 'react', 'vue']
-    }, {
-        title: '🧑‍💻 Back end:',
-        dirName: 'backEnd',
-        files: ['go_gopher', 'haskell', 'java', 'php', 'python', 'r', 'ruby', 'rust']
-    }, {
-        title: '🧑‍💼 Office:',
-        dirName: 'Office',
-        files: ['excel', 'powerpoint', 'word']
-    }, {
-        title: '🙋 Other:',
-        dirName: 'Other',
-        files: ['c4d', 'unity']
-    }, {
-        title: '📲 Phone:',
-        dirName: 'Phone',
-        files: ['android', 'applescript', 'swift']
-    },]
+    const iconsGroup = [
+        {
+            title: '🧑‍🎨 Designer:',
+            dirName: 'Designer',
+            files: ['Adobe', 'Ae', 'ai', 'Pr']
+        },
+        {
+            title: '🧑‍💻 Front end:',
+            dirName: 'FroneEnd',
+            files: ['html', 'react', 'vue']
+        },
+        {
+            title: '🧑‍💻 Back end:',
+            dirName: 'backEnd',
+            files: ['go_gopher', 'haskell', 'java', 'php', 'python', 'r', 'ruby', 'rust']
+        },
+        {
+            title: '🧑‍💼 Office:',
+            dirName: 'Office',
+            files: ['excel', 'powerpoint', 'word']
+        },
+        {
+            title: '🙋 Other:',
+            dirName: 'Other',
+            files: ['c4d', 'unity']
+        },
+        {
+            title: '📲 Phone:',
+            dirName: 'Phone',
+            files: ['android', 'applescript', 'swift']
+        }
+    ];
     function handleIconClick(e) {
         const imgSrc = e.target.src;
         const canvas = canvasRef.current;
         const image = imageRef.current;
-        const ctx = canvas.getContext("2d");
+        const ctx = canvas.getContext('2d');
         // 新建 Image 对象
         const img = new Image();
         // 设置 Image src
         img.src = imgSrc;
         // Image 加载完毕后画到 canvas 上
-        img.onload = function() {
+        img.onload = function () {
             drawIconBorder(ctx, canvasRealWidth, canvasRealHeight, iconRealSize);
-            ctx.drawImage(
-                img,
-                canvasRealWidth * 0.675,
-                canvasRealHeight * 0.675,
-                iconRealSize,
-                iconRealSize
-            );
+            ctx.drawImage(img, canvasRealWidth * 0.675, canvasRealHeight * 0.675, iconRealSize, iconRealSize);
             drawCanvas2Image(canvas, image);
         };
     }
-    return <div className="icon-banners">
-        <h4>请选择你的 Icon Pin 😆:</h4>
-        {
-            iconsGroup.map(function(iconItem, index) {
-                const { title, dirName, files } = iconItem;
-                return <React.Fragment key={`icon-F-${index}`}>
-                    <h4>{title}</h4>
-                    <div className="icon-banner">
-                        {
-                            files.map(function(fileName) {
-                                return <img
-                                            key={`${dirName}/${fileName}`}
-                                            src={`${window.PinsImages[fileName]}`}
-                                            onClick={handleIconClick}
-                                        />
-                            })
-                        }
-                    </div>
-                </React.Fragment>
-            })
-        }
-    </div>
+    return (
+        <div className="icon-banners">
+            <h4>请选择你的 Icon Pin 😆:</h4>
+            {iconsGroup.map(function (iconItem, index) {
+                const {title, dirName, files} = iconItem;
+                return (
+                    <React.Fragment key={`icon-F-${index}`}>
+                        <h4>{title}</h4>
+                        <div className="icon-banner">
+                            {files.map(function (fileName) {
+                                return (
+                                    <img
+                                        key={`${dirName}/${fileName}`}
+                                        src={`${window.PinsImages[fileName]}`}
+                                        onClick={handleIconClick}
+                                    />
+                                );
+                            })}
+                        </div>
+                    </React.Fragment>
+                );
+            })}
+        </div>
+    );
 }
 
-function UploadInput(props) {
-    let { switchStatus, setUploadData } = props;
+function UploadInputComponent(props) {
+    let {switchStatus, setUploadData} = props;
 
     function onChange(e) {
         const file = e.target.files[0];
@@ -118,19 +121,15 @@ function UploadInput(props) {
             switchStatus(STATUS.CROPPER);
             const dataURL = reader.result;
             setUploadData(dataURL);
-        }
+        };
     }
 
-    return <div className="form-item">
-        <label>🙌 选择头像图片:</label>
-        <input
-            type="file"
-            id="avatar"
-            name="avatar"
-            accept="image/*"
-            onChange={onChange}
-        />
-    </div>
+    return (
+        <div className="form-item">
+            <label>🙌 选择头像图片:</label>
+            <input type="file" id="avatar" name="avatar" accept="image/*" onChange={onChange} />
+        </div>
+    );
 }
 
 function CropperComponent(props) {
@@ -169,28 +168,25 @@ function CropperComponent(props) {
     </React.Fragment>
 }
 
-function DownLoadBtn(props) {
+function DownLoadBtnComponent(props) {
     function handleBtnClick() {
-        const { canvasRef } = props;
-        var MIME_TYPE = "image/png";
+        const {canvasRef} = props;
+        var MIME_TYPE = 'image/png';
         var imgURL = canvasRef.current.toDataURL(MIME_TYPE);
-        var dlLink = document.createElement("a");
-        dlLink.download = "JallowPinsAvatar";
+        var dlLink = document.createElement('a');
+        dlLink.download = 'JallowPinsAvatar';
         dlLink.href = imgURL;
-        dlLink.dataset.downloadurl = [
-            MIME_TYPE,
-            dlLink.download,
-            dlLink.href,
-        ].join(":");
-    
+        dlLink.dataset.downloadurl = [MIME_TYPE, dlLink.download, dlLink.href].join(':');
+
         document.body.appendChild(dlLink);
         dlLink.click();
         document.body.removeChild(dlLink);
     }
-    return <button
-        className="download-btn primary-btn"
-        onClick={handleBtnClick}
-    >下载 Jallow Pins 头像</button>
+    return (
+        <button className="download-btn primary-btn" onClick={handleBtnClick}>
+            下载 Jallow Pins 头像
+        </button>
+    );
 }
 
 function CanvasComponent(props) {
@@ -267,32 +263,36 @@ function CanvasComponent(props) {
         };
     }, [])
 
-    return <React.Fragment>
-        <img id="avatar-img" ref={imageRef}/>
-        <canvas
-            id="jallowPinsCanvas"
-            width="900"
-            height="900"
-            ref={canvasRef}
-            style={{width: '300px', height: '300px'}}
-        ></canvas>
-        <div>
-            <DownLoadBtn canvasRef={canvasRef} />
-            <button
-                className='reupload-btn primary-btn'
-                onClick={function() {
-                    switchStatus(STATUS.UPLOAD)
-                }}
-            >重新上传</button>
-        </div>
-        <Icons
-            canvasRef={canvasRef}
-            imageRef={imageRef}
-            canvasRealWidth={canvasRealWidth}
-            canvasRealHeight={canvasRealHeight}
-            iconRealSize={iconRealSize}
-        />
-    </React.Fragment>
+    return (
+        <React.Fragment>
+            <img id="avatar-img" ref={imageRef} />
+            <canvas
+                id="jallowPinsCanvas"
+                width="900"
+                height="900"
+                ref={canvasRef}
+                style={{width: '300px', height: '300px'}}
+            ></canvas>
+            <div>
+                <DownLoadBtnComponent canvasRef={canvasRef} />
+                <button
+                    className="reupload-btn primary-btn"
+                    onClick={function () {
+                        switchStatus(STATUS.UPLOAD);
+                    }}
+                >
+                    重新上传
+                </button>
+            </div>
+            <IconsComponent
+                canvasRef={canvasRef}
+                imageRef={imageRef}
+                canvasRealWidth={canvasRealWidth}
+                canvasRealHeight={canvasRealHeight}
+                iconRealSize={iconRealSize}
+            />
+        </React.Fragment>
+    );
 }
 
 const STATUS = {
@@ -344,24 +344,19 @@ class Root extends React.Component {
         switch (status) {
             case STATUS.UPLOAD:
             case STATUS.CROPPER:
-                return <React.Fragment>
-                    <UploadInput
-                        switchStatus={this.switchStatus}
-                        setUploadData={this.setUploadData}
-                    />
-                    <CropperComponent
-                        switchStatus={this.switchStatus}
-                        uploadData={uploadData}
-                        cropper={cropper}
-                        setCropper={this.setCropper}
-                        setCroppedImgSrc={this.setCroppedImgSrc}
-                        style={
-                            status === STATUS.UPLOAD ?
-                            {visibility: 'hidden'} :
-                            {visibility: 'visible'}
-                        }
-                    />
-                </React.Fragment>
+                return (
+                    <React.Fragment>
+                        <UploadInputComponent switchStatus={this.switchStatus} setUploadData={this.setUploadData} />
+                        <CropperComponent
+                            switchStatus={this.switchStatus}
+                            uploadData={uploadData}
+                            cropper={cropper}
+                            setCropper={this.setCropper}
+                            setCroppedImgSrc={this.setCroppedImgSrc}
+                            style={status === STATUS.UPLOAD ? {visibility: 'hidden'} : {visibility: 'visible'}}
+                        />
+                    </React.Fragment>
+                );
             case STATUS.PICK_ICONS:
                 return <CanvasComponent imgSrc={imgSrc} switchStatus={this.switchStatus} />
             default:
